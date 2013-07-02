@@ -1,0 +1,287 @@
+%!TEX TS-program = xelatex
+
+% -- Document Class -----------------------------------------------------------
+
+\documentclass[a4paper, 12pt]{article}
+
+% -- Packages -----------------------------------------------------------------
+
+% Language
+\usepackage{polyglossia}
+    \setmainlanguage{english}
+    \setotherlanguage{german}
+% Context sensitive quotation
+\usepackage{csquotes}
+% Citations
+% \usepackage[style=alphabetic, backend=biber]{biblatex}
+    % \addbibresource{References.bib}
+% Extend options for positioning floats
+\usepackage{float}
+% Support highlighting of certain parts of the text
+\usepackage{framed}
+% Headers & Footers
+\usepackage[automark, nouppercase]{scrpage2}
+% To change the format of titles
+\usepackage{titlesec}
+% Support for unicode math fonts
+\usepackage{unicode-math}
+% Extended color support
+\usepackage[x11names]{xcolor}
+% Extras for XƎTEX
+\usepackage{xltxtra}
+% Hyperlinks and pdf properties
+\usepackage{hyperref}
+
+% -- Color Definitions --------------------------------------------------------
+
+% Background color for syntax highlighting
+\definecolor{bgcolor}{rgb}      {1,     1,      1}
+
+% Custom color definitions
+\definecolor{aqua}{rgb}         {0,     0.56,   1}
+\definecolor{bluegray}{rgb}     {0.22,  0.46,   0.84}
+\definecolor{grape}{rgb}        {0.56,  0,      1}
+\definecolor{orchid}{rgb}       {0.41,  0.13,   0.55}
+\definecolor{orange}{rgb}       {1,     0.54,   0}
+\definecolor{silver}{rgb}       {0.57,  0.57,   0.57}
+\definecolor{turquoise}{rgb}    {0,     0.86,   0.84}
+
+% -- Macros -------------------------------------------------------------------
+
+\newcommand{\Title}{Exercises}
+\newcommand{\TitleDescription}{Computer Aided Verification}
+\newcommand{\Version}{1}
+\newcommand{\Subject}
+    {Solutions for the exercises of the course Computer Aided Verification}
+\newcommand{\KeyWords}{BDD, Kripke structure}
+\newcommand{\LeftFooter}{\Title~—~\TitleDescription}
+
+\newcommand{\AuthorOne}{René Schwaiger}
+\newcommand{\MailOne}{\href{mailto:sanssecours@f-m.fm}{sanssecours@f-m.fm}}
+
+% Syntax highlighting definitions
+% Text
+\newcommand{\hlstd}[1]{\textcolor{black}{#1}}
+% Numbers
+\newcommand{\hlnum}[1]{\textcolor{DarkOrchid4}{#1}}
+\newcommand{\hlesc}[1]{\textcolor[rgb]{1,0,1}{#1}}
+% Strings
+\newcommand{\hlstr}[1]{\textcolor{SeaGreen3}{#1}}
+\newcommand{\hlpps}[1]{\textcolor[rgb]{0.51,0.51,0}{#1}}
+\newcommand{\hlslc}[1]{\textcolor[rgb]{0.51,0.51,0.51}{\it{#1}}}
+\newcommand{\hlcom}[1]{\textcolor{aqua}{#1}}
+\newcommand{\hlppc}[1]{\textcolor[rgb]{0,0.51,0}{#1}}
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}
+\newcommand{\hllin}[1]{\textcolor[rgb]{0.33,0.33,0.33}{#1}}
+% Keywords
+\newcommand{\hlkwa}[1]{\textcolor{DodgerBlue3}{#1}}
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0,0.34,0.68}{#1}}
+\newcommand{\hlkwc}[1]{\textcolor{DarkOrchid4}{#1}}
+% Functions
+\newcommand{\hlkwd}[1]{\textcolor{orange}{#1}}
+
+\newcommand{\codeinput}[1]
+{
+    \begin{leftbar}
+        \input{Code/#1}
+    \end{leftbar}
+}
+
+\newcommand{\code}[1]
+{
+    \hl{\texttt{#1}}
+}
+
+% -- Document Properties ------------------------------------------------------
+
+% No indendation after paragraph
+\setlength\parindent{0cm}
+
+% Hyperref properties
+\hypersetup
+{
+    pdftitle    = {\Title},
+    pdfsubject  = {\Subject},
+    pdfauthor   = {\AuthorOne},
+    pdfkeywords = {\KeyWords},
+    colorlinks  = true,
+    linkcolor   = black,
+    anchorcolor = black,
+    citecolor   = silver,
+    urlcolor    = orange
+}
+
+% -- Fonts --------------------------------------------------------------------
+
+% Use same size for numbers and other text
+\defaultfontfeatures{Numbers=Lining}
+
+% Set fonts for document
+\setmainfont[Mapping=tex-text]{Avenir Next}
+\setsansfont[Mapping=tex-text]{Ubuntu}
+\setmonofont[Scale=MatchLowercase]{Menlo}
+\setmathfont{Asana-Math.otf}
+\setmathfont[range=\mathtt, Scale=MatchLowercase]{Menlo}
+
+% Define font styles
+\newfontfamily\Zapfino{Zapfino}
+
+% -- Header And Footers -------------------------------------------------------
+
+% Use normal font instead of italic font for head
+\renewcommand{\headfont}{\normalfont}
+
+% Set headers and footers
+\ihead{\headmark}
+\ohead{}
+\ifoot{\LeftFooter}
+\ofoot{\thepage}
+
+% Set height of head
+\setlength{\headheight}{1.8\baselineskip}
+
+% Set thickness of separation line in header, footer
+\setheadsepline{0.5pt}
+\setfootsepline{0.5pt}
+
+% -- Titlepage ----------------------------------------------------------------
+
+\begin{document}
+
+\begin{titlepage}
+
+    \begin{center}
+        % Title and title-description
+        {\Large\Zapfino \Title}
+        \vskip 0.5cm
+        {\Large\textit\TitleDescription}
+        \vskip 1cm
+        \hrule
+        \vskip 0.5cm
+        % Information about author
+        \begin{tabular}{p{8cm}l}
+            \AuthorOne  & \MailOne\\
+        \end{tabular}
+        \vskip 0.5cm
+        \hrule
+        \vskip 13.5cm
+    \end{center}
+
+    % Date and version number
+    \begin{leftbar}
+        \begin{tabular}{ll}
+            \textbf{Version}    & \Version\\
+            \textbf{Date}       & \today
+        \end{tabular}
+    \end{leftbar}
+
+\end{titlepage}
+
+% -- Table of Contents --------------------------------------------------------
+
+% Set section format for table of contents
+\titleformat{\section}{\sffamily\bfseries}{}{0pt}{}[{\color{aqua}\hrule}]
+
+% Set separation of dots between name of section and page number to such a high
+% value that there will be no points in the table of contents
+\makeatletter \renewcommand{\@dotsep}{10000} \makeatother
+% Use blank header and footer
+\pagestyle{empty}
+% Start on new page
+\newpage
+% The table of contents starts at the second page
+\setcounter{page}{2}
+% Set table of contents
+\tableofcontents
+
+% -- Section & Paragraph Style ------------------------------------------------
+
+% Set format for section
+\titleformat{\section}
+    {\large\sffamily\bfseries}  % Large, bold, sans serif font for section
+    {}                          % No format applied to whole title
+    {0pt}                       % No separation between label and title
+    {\thesection~·~}            % Start with section number
+    [{\color{aqua}\hrule}]      % Underline with blue ruler
+
+% Set format for other sections and paragraphs
+% Color = orchid, Font = bold, sans serif
+\titleformat*{\subsection}{\color{orchid}\sffamily\bfseries}
+\titleformat*{\subsubsection}{\color{orchid}\sffamily\bfseries}
+\titleformat*{\paragraph}{\color{orchid}\sffamily\bfseries}
+\titleformat*{\subparagraph}{\color{orchid}\sffamily\bfseries}
+
+% -- Page Style ---------------------------------------------------------------
+
+% Start with text on a new page
+\newpage
+% Display headers and footers
+\pagestyle{scrheadings}
+
+% -- Text ---------------------------------------------------------------------
+
+\section{Binary Decision Diagrams}
+
+\subsection{Exercise 1}
+
+Give a linear time algorithm for BDD isomorphism as defined on page 9.
+
+\subsection{Exercise 2}
+
+Describe a size-efficient BDD for the relation “a ≥ b” for n-bit integer
+numbers.
+
+\subsection{Exercise 3}
+
+Describe an algorithm which transforms a BDD into an equivalent Boolean
+formula.
+
+\section{Temporal Logic}
+
+\subsection{Exercise 4}
+
+Prove the equivalence for $A(f U g)$ on page 16.
+
+\subsection{Exercise 5}
+
+Show the following lemma: Let $M$ and $N$ be two Kripke structures such that
+the transition relation of $M$ is a superset of the transition relation of
+$N$. If an LTL property $f$ holds on $M$, then $f$ also holds on $N$.
+
+\subsection{Exercise 6}
+
+Show that $AFG p$ is not logically equivalent to $AFAG p$.
+
+\subsection{Exercise 7}
+
+Describe a simple model checker for CTL over Kripke structures in pseudocode.
+
+\subsection{Exercise 8}
+
+Find a translation of the $U$ operator to propositional logic in bounded model
+checking
+\subsection{Exercise 9}
+
+Show that all LTL properties have counterexamples which are either finite
+paths or finite paths with a loop. Hint: Use the fact that LTL specifications
+can be translated into Buechi automata.
+
+\subsection{Exercise 10}
+
+Give an LTL specification where the smallest counterexample is larger than the
+number of states in the Kripke structure.
+
+\subsection{Exercise 11}
+
+Show how you can use SMV to solve chess problems. “Given a chess board, white
+has a winning strategy in 3 moves.” How do you describe the board? What is
+the specification?
+
+% -- Bibliography -------------------------------------------------------------
+
+% Set section format for bibliography
+% \titleformat{\section}{\sffamily\bfseries}{}{0pt}{}[{\color{aqua}\hrule}]
+% Display bibliography
+% \printbibliography
+
+\end{document}
