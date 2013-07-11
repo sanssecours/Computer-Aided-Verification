@@ -68,7 +68,8 @@
 % Strings
 \newcommand{\hlstr}[1]{\textcolor{SeaGreen3}{#1}}
 \newcommand{\hlpps}[1]{\textcolor[rgb]{0.51,0.51,0}{#1}}
-\newcommand{\hlslc}[1]{\textcolor[rgb]{0.51,0.51,0.51}{\it{#1}}}
+% Comments
+\newcommand{\hlslc}[1]{\textcolor{aqua}{#1}}
 \newcommand{\hlcom}[1]{\textcolor{aqua}{#1}}
 \newcommand{\hlppc}[1]{\textcolor[rgb]{0,0.51,0}{#1}}
 \newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}
@@ -146,36 +147,32 @@
 
 % -- Titlepage ----------------------------------------------------------------
 
+\pagestyle{empty}
 \begin{document}
 
 \begin{titlepage}
-
     \begin{center}
         % Title and title-description
-        {\Large\Zapfino \Title}
+        {\Huge\Zapfino\Title}
+        \vskip 0.5cm
+        {\color{aqua}\hrule}
         \vskip 0.5cm
         {\Large\textit\TitleDescription}
-        \vskip 1cm
-        \hrule
-        \vskip 0.5cm
-        % Information about author
-        \begin{tabular}{p{8cm}l}
-            \AuthorOne  & \MailOne\\
-        \end{tabular}
-        \vskip 0.5cm
-        \hrule
-        \vskip 13.5cm
+        \vskip 14cm
     \end{center}
 
     % Date and version number
     \begin{leftbar}
         \begin{tabular}{ll}
-            \textbf{Version}    & \Version\\
-            \textbf{Date}       & \today
+            \textbf{Author}  & \AuthorOne\\
+            \textbf{Mail}    & \MailOne\\
+            \textbf{Version} & \Version\\
+            \textbf{Date}    & \today
         \end{tabular}
     \end{leftbar}
 
 \end{titlepage}
+
 
 % -- Table of Contents --------------------------------------------------------
 
@@ -226,6 +223,10 @@
 
 Give a linear time algorithm for BDD isomorphism as defined on page 9.
 
+\subsubsection{Solution}
+
+{\fontsize{9pt}{11pt} \codeinput{bdd}}
+
 \subsection{Exercise 2}
 
 Describe a size-efficient BDD for the relation “a ≥ b” for n-bit integer
@@ -233,7 +234,7 @@ numbers.
 
 \subsection{Exercise 3}
 
-Describe an algorithm which transforms a BDD into an equivalent Boolean
+Describe an algorithm which transforms a BDD into an equivalent boolean
 formula.
 
 \section{Temporal Logic}

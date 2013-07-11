@@ -27,8 +27,7 @@ EXIT_SUCCESS="0"
 function exit_on_failure()
 {
     if [ "$?" != "$EXIT_SUCCESS" ]; then
-        echo -n "ERROR: "
-        echo -e "${1}"
+        echo "ERROR: ${1}" 1>&2
         exit 1
     fi
 }
@@ -67,14 +66,14 @@ function convert_to_tex()
 
             # Convert single file
             $convert "$code_file" > "$tex_file"
+            # Check for error
+            exit_on_failure "Could not convert "${code_file}""
 
             # Remove extra newline at the end of the generated code
             sed -n '1h;1!H;${;g;s/\\\\\n\\mbox/\\mbox/g;p;}' \
                 "$tex_file" > tmp.txt
             mv tmp.txt "$tex_file"
 
-            # Check for error
-            exit_on_failure "Could not convert "${code_file}""
 
             # Display conversion step on success
             echo "${code_file} => ${tex_file}"
@@ -83,12 +82,12 @@ function convert_to_tex()
 
 # -- Main ---------------------------------------------------------------------
 
-input_dir="../Shell/"
-output_dir='../Code/'
+input_dir="Pseudocode/"
+output_dir='Code/'
 # e.g. "hello.sh"
-input_files=()
+input_files=(bdd.py)
 # e.g. "hello"
-output_files=()
+output_files=(bdd)
 
 # Create ouptut directory if it does not exist already
 mkdir -p "$output_dir"

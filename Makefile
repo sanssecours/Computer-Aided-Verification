@@ -1,16 +1,24 @@
 # -----------------------------------------------------------------------------
 # 	Generate PDFs from the XeLaTeX files in the current folder
 #
-# 	Version: 2
-# 	Date:    2013-06-05
+# 	Version: 3
+# 	Date:    2013-07-11
 # 	Author:  René Schwaiger (sanssecours@f-m.fm)
 # -----------------------------------------------------------------------------
 
-.PHONY: clean code2latex doc
+.PHONY: clean code2latex doc test
+
+# -- Variables ----------------------------------------------------------------
+
+PROGRAM = Pseudocode/bdd.py
 
 # -- Rules --------------------------------------------------------------------
 
-run: code2latex
+run: test
+	python $(PROGRAM)
+
+test:
+	flake8 --exit-zero --max-complexity=10 .
 
 # Remover auto generated files
 clean:
