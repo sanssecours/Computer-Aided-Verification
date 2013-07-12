@@ -4,10 +4,13 @@
 # -----------------------------------------------------------------------------
 # 	Various code to create and operate on binary decision diagrams.
 #
-# 	Version: 1
-# 	Date:    2013-07-11
+# 	Version: 2
+# 	Date:    2013-07-12
 # 	Author:  René Schwaiger (sanssecours@f-m.fm)
+#
 # -----------------------------------------------------------------------------
+
+# -- Classes ------------------------------------------------------------------
 
 
 class Terminal(object):
@@ -45,19 +48,6 @@ class Terminal(object):
         except AttributeError:
             # A terminal can never be equal to a non-terminal object
             return False
-
-    def __repr__(self):
-        """Return a representation of the terminal node.
-
-        Examples:
-
-            >>> Terminal()
-            True
-            >>> Terminal(False)
-            False
-
-        """
-        return self.value.__repr__()
 
 
 class Node(object):
@@ -103,10 +93,6 @@ class Node(object):
         except AttributeError:
             return False
 
-    def __repr__(self):
-        """Print a representation of this BDD node."""
-        return '({})'.format(self.variable)
-
 
 class BDD(object):
     """Saves data contained in a binary decision diagram."""
@@ -127,10 +113,6 @@ class BDD(object):
 
         """
         self.root = root
-
-    def __repr__(self):
-        """Return a representation of this BDD."""
-        return repr(self.root)
 
     def isomorphic(self, bdd):
         """Check if two BDDs are isomorphic or not.
