@@ -84,7 +84,7 @@
 \newcommand{\codeinput}[1]
 {
     \begin{leftbar}
-        \input{Code/#1}
+        {\fontsize{9pt}{11pt}\input{Code/#1}}
     \end{leftbar}
 }
 
@@ -225,7 +225,7 @@ Give a linear time algorithm for BDD isomorphism as defined on page 9.
 
 \subsubsection{Solution}
 
-{\fontsize{9pt}{11pt} \codeinput{bdd}}
+\codeinput{bdd}
 
 \newpage
 \subsection{Exercise 2}
@@ -252,6 +252,16 @@ ROBDD shown in Figure~\ref{figure:OBDD_Comparison}.
 
 Describe an algorithm which transforms a BDD into an equivalent boolean
 formula.
+
+\subsubsection{Solution}
+
+The following code shows an algorithm which creates a boolean formula in
+disjunctive normal form. The basic idea behind the code is to create a
+conjunction of every variable visited on a path to a terminal node with value
+“1”. We create the whole DNF-formula by joining the formulas for these paths
+by disjunction.
+
+\codeinput{bdd_to_formula}
 
 \section{Temporal Logic}
 

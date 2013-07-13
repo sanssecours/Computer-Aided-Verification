@@ -85,9 +85,9 @@ function convert_to_tex()
 input_dir="Pseudocode/"
 output_dir='Code/'
 # e.g. "hello.sh"
-input_files=(bdd.py)
+input_files=(bdd.py bdd_to_formula.py)
 # e.g. "hello"
-output_files=(bdd)
+output_files=(bdd bdd_to_formula)
 
 # Create ouptut directory if it does not exist already
 mkdir -p "$output_dir"
