@@ -313,6 +313,18 @@ Show the following lemma: Let $M$ and $N$ be two Kripke structures such that
 the transition relation of $M$ is a superset of the transition relation of
 $N$. If an LTL property $f$ holds on $M$, then $f$ also holds on $N$.
 
+\subsubsection{Solution}
+
+Let us assume that a certain LTL formula $\mathbf{A}f$ holds on $M$. Since the
+transition relation of $M$ is a superset of the transition relations of $N$,
+there is always the possibility to construct a Kripke structure equivalent to
+$M$ by extending $N$ with additional transitions/states. Since a LTL formula
+quantifies over \emph{all paths} in a Kripke structure the set of all formulas
+which hold on $N$ gets smaller when we extend $N$. This means that the set of
+all LTL formulas which hold on $N$ is a superset of all the LTL formulas which
+hold on $M$. From this follows that, if a certain LTL formula $\mathbf{A}f$
+holds on $M$, then this formula also has to hold on $N$.
+
 \subsection{Exercise 6}
 
 Show that $AFG p$ is not logically equivalent to $AFAG p$.
