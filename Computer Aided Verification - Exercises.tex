@@ -12,13 +12,14 @@
     \setotherlanguage{german}
 % Context sensitive quotation
 \usepackage{csquotes}
-% Citations
-% \usepackage[style=alphabetic, backend=biber]{biblatex}
-    % \addbibresource{References.bib}
+% Customized enumeration
+\usepackage{enumerate}
 % Extend options for positioning floats
 \usepackage{float}
 % Support highlighting of certain parts of the text
 \usepackage{framed}
+% Tools for mathematical typesetting
+\usepackage{mathtools}
 % Headers & Footers
 \usepackage[automark, nouppercase]{scrpage2}
 % To change the format of titles
@@ -267,7 +268,44 @@ by disjunction.
 
 \subsection{Exercise 4}
 
-Prove the equivalence for $A(f U g)$ on page 16.
+Prove the equivalence for $\mathbf{A}(f \mathbf{U} g)$ on page 16.
+
+\subsubsection{Solution}
+
+We need to prove that $\mathbf{A}(f \mathbf{U} g)$ is equivalent to $¬E(¬g
+\mathbf{U} ¬f ∧ ¬g) ∧ ¬\mathbf{EG} ¬g$. We use the following equivalences:
+
+\begin{enumerate}[(1)]
+    \item $\mathbf{A} f ⇔ ¬\mathbf{E}¬f$
+    \item
+
+    \[ ¬(f \mathbf{U} g) ⇔ (\mathbf{G}¬g ∨ ¬g \mathbf{U} ¬f ∧ ¬g) \]
+    The formula above is true since for $f$ until $g$ to not hold:
+        \begin{enumerate}
+
+            \item $g$ has to not hold at all (there exists no $k$ such that
+            $π^k⊧g$) or
+
+            \item $f$ might hold at first, while $g$ does not hold, but $g$
+            does not hold after that ($¬g \mathbf{U} ¬f ∧ ¬g$).
+
+        \end{enumerate}
+
+    \item $\mathbf{E}(f ∨ g) ⇔ \mathbf{E}f ∨ \mathbf{E}g$
+    \item $¬ (f ∨ g) ⇔ ¬f ∧ ¬g$
+\end{enumerate}
+
+to deduct the following proof:
+\begin{align*}
+    \mathbf{A}\left(f \mathbf{U} g\right)
+    & \stackrel{(1)}{⇔} ¬\mathbf{E} ¬\left(f\mathbf{U} g\right)\\
+    & \stackrel{(2)}{⇔} ¬\mathbf{E} \left(\left(\mathbf{G}¬g\right) ∨
+      \left(¬g\mathbf{U} ¬f ∧ ¬g\right)\right)\\
+    & \stackrel{(3)}{⇔} ¬\left(\mathbf{EG}¬g ∨
+      \mathbf{E}\left(¬g\mathbf{U} ¬f ∧ ¬g\right)\right)\\
+    & \stackrel{(4)}{⇔} ¬\mathbf{EG}¬g ∧ ¬\mathbf{E}\left(¬g\mathbf{U} ¬f ∧
+      ¬g\right)\\
+\end{align*}
 
 \subsection{Exercise 5}
 
@@ -303,12 +341,5 @@ number of states in the Kripke structure.
 Show how you can use SMV to solve chess problems. “Given a chess board, white
 has a winning strategy in 3 moves.” How do you describe the board? What is
 the specification?
-
-% -- Bibliography -------------------------------------------------------------
-
-% Set section format for bibliography
-% \titleformat{\section}{\sffamily\bfseries}{}{0pt}{}[{\color{aqua}\hrule}]
-% Display bibliography
-% \printbibliography
 
 \end{document}
