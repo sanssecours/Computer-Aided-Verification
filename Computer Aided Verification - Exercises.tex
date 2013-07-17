@@ -18,6 +18,8 @@
 \usepackage{float}
 % Support highlighting of certain parts of the text
 \usepackage{framed}
+% Support spaces in filenames
+\usepackage{grffile}
 % Tools for mathematical typesetting
 \usepackage{mathtools}
 % Headers & Footers
@@ -241,13 +243,12 @@ ordering. Therefore we place the bits of the same significance after each
 other starting from the most significant bit of $a$. This leaves us with the
 ROBDD shown in Figure~\ref{figure:OBDD_Comparison}.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
-        \includegraphics[width=.65\textwidth]{Figures/OBDD_Comparison.pdf}
+        \includegraphics[width=.62\textwidth]{Figures/OBDD Comparison.pdf}
     \caption{OBDD for the relation “a ≥ b”}
     \label{figure:OBDD_Comparison}
 \end{figure}
-
 
 \subsection{Exercise 3}
 
