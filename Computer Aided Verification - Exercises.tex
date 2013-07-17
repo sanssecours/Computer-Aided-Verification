@@ -12,8 +12,11 @@
     \setotherlanguage{german}
 % Context sensitive quotation
 \usepackage{csquotes}
-% Customized enumeration
-\usepackage{enumerate}
+% Citations
+\usepackage[style=alphabetic, backend=biber]{biblatex}
+    \addbibresource{References.bib}
+% Customize enumerations
+\usepackage{enumitem}
 % Extend options for positioning floats
 \usepackage{float}
 % Support highlighting of certain parts of the text
@@ -276,11 +279,9 @@ Prove the equivalence for $\mathbf{A}(f \mathbf{U} g)$ on page 16.
 We need to prove that $\mathbf{A}(f \mathbf{U} g)$ is equivalent to $¬E(¬g
 \mathbf{U} ¬f ∧ ¬g) ∧ ¬\mathbf{EG} ¬g$. We use the following equivalences:
 
-\begin{enumerate}[(1)]
+\begin{enumerate}[label=(\arabic*)]
     \item $\mathbf{A} f ⇔ ¬\mathbf{E}¬f$
-    \item
-
-    \[ ¬(f \mathbf{U} g) ⇔ (\mathbf{G}¬g ∨ ¬g \mathbf{U} ¬f ∧ ¬g) \]
+    \item $¬(f \mathbf{U} g) ⇔ (\mathbf{G}¬g ∨ ¬g \mathbf{U} ¬f ∧ ¬g)$
     The formula above is true since for $f$ until $g$ to not hold:
         \begin{enumerate}
 
@@ -328,7 +329,58 @@ holds on $M$, then this formula also has to hold on $N$.
 
 \subsection{Exercise 6}
 
-Show that $AFG p$ is not logically equivalent to $AFAG p$.
+Show that $\mathbf{AFG} p$ is not logically equivalent to $\mathbf{AFAG} p$.
+
+\subsubsection{Solution}
+
+To show that $\mathbf{AFG} p$ is not equivalent to $\mathbf{AFAG} p$ we
+construct a Kripke structure which contains a state where $\mathbf{AFG} p$
+holds but $\mathbf{AFAG} p$ does not.
+Figure~\ref{figure:Kripke_Structure_Exercise_6} shows this Kripke structure
+(\cite{Exercises_Formal_Methods}), where $s₀⊧\mathbf{AFG} p$ holds, but
+$s₀⊧\mathbf{AFAG} p$ does not.
+
+\begin{description}[style=multiline, leftmargin=3cm]
+
+    \item[$s₀⊧\mathbf{AF}(\mathbf{G} p)$] This formula specifies that in all
+    paths sometimes in the future $p$ will hold globally. This is true for the
+    given Kripke structure since we start in $s₀$ in which $p$ holds and either
+
+        \begin{itemize}
+
+            \item continue to stay in this state ($p$ holds globally) or
+
+            \item go to $s₁$ immediately followed by state $s₂$ ($p$ holds
+            globally).
+
+        \end{itemize}
+
+    \item[$s₀⊧\mathbf{AF}(\mathbf{AG} p)$] The formula specifies that
+    sometimes in the future for all paths $\mathbf{AG} p$ (for all paths $p$
+    must always be true) has to hold. This is not the case if we follow the
+    path on the left in the computation tree for the Kripke Structure (see
+    Figure~\ref{figure:Computation_Tree_Exercise_6}) since there is always a
+    path on the right where $p$ does not hold for every state.
+
+\end{description}
+
+\begin{figure}[htbp]
+    \centering
+        \includegraphics[width=.4\textwidth]
+            {Figures/Kripke Structure Exercise 6.pdf}
+    \caption{Kripe Structure, where $s₀⊧\mathbf{AFG} p$ holds, but
+             $s₀⊧\mathbf{AFAG} p$ does not hold}
+    \label{figure:Kripke_Structure_Exercise_6}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+        \includegraphics[width=.7\textwidth]
+            {Figures/Computation Tree Exercise 6.pdf}
+    \caption{Computation Tree for
+             Figure~\ref{figure:Kripke_Structure_Exercise_6}}
+    \label{figure:Computation_Tree_Exercise_6}
+\end{figure}
 
 \subsection{Exercise 7}
 
@@ -354,5 +406,12 @@ number of states in the Kripke structure.
 Show how you can use SMV to solve chess problems. “Given a chess board, white
 has a winning strategy in 3 moves.” How do you describe the board? What is
 the specification?
+
+% -- Bibliography -------------------------------------------------------------
+
+% Set section format for bibliography
+\titleformat{\section}{\sffamily\bfseries}{}{0pt}{}[{\color{aqua}\hrule}]
+% Display bibliography
+\printbibliography
 
 \end{document}
