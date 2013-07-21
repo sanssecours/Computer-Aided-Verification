@@ -27,6 +27,8 @@
 \usepackage{mathtools}
 % Headers & Footers
 \usepackage[automark, nouppercase]{scrpage2}
+% Emphasize text
+\usepackage{soul}
 % To change the format of titles
 \usepackage{titlesec}
 % Support for unicode math fonts
@@ -47,6 +49,7 @@
 \definecolor{aqua}{rgb}         {0,     0.56,   1}
 \definecolor{bluegray}{rgb}     {0.22,  0.46,   0.84}
 \definecolor{grape}{rgb}        {0.56,  0,      1}
+\definecolor{lightgray}{rgb}	{0.94,	0.94,	0.94}
 \definecolor{orchid}{rgb}       {0.41,  0.13,   0.55}
 \definecolor{orange}{rgb}       {1,     0.54,   0}
 \definecolor{silver}{rgb}       {0.57,  0.57,   0.57}
@@ -101,7 +104,10 @@
 
 % -- Document Properties ------------------------------------------------------
 
-% No indendation after paragraph
+% Background color for highlighted text
+\sethlcolor{lightgray}
+
+% No indentation after paragraphs
 \setlength\parindent{0cm}
 
 % Hyperref properties
