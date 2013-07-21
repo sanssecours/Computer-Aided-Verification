@@ -74,7 +74,6 @@ function convert_to_tex()
                 "$tex_file" > tmp.txt
             mv tmp.txt "$tex_file"
 
-
             # Display conversion step on success
             echo "${code_file} => ${tex_file}"
     done
@@ -85,10 +84,27 @@ function convert_to_tex()
 input_dir="Pseudocode/"
 output_dir='Code/'
 # e.g. "hello.sh"
-input_files=(bdd.py bdd_to_formula.py)
+input_files=(bdd.py
+             bdd_to_formula.py
+             model_check.py
+             label_not.py
+             label_or.py
+             label_AX.py
+             label_EX.py
+             label_AU.py
+             label_EU.py
+             au.py)
 # e.g. "hello"
-output_files=(bdd bdd_to_formula)
-
+output_files=(bdd
+              bdd_to_formula
+              model_check
+              label_not
+              label_or
+              label_AX
+              label_EX
+              label_AU
+              label_EU
+              au)
 # Create ouptut directory if it does not exist already
 mkdir -p "$output_dir"
 # Convert the files

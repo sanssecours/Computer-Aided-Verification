@@ -392,6 +392,86 @@ $s₀⊧\mathbf{AFAG} p$ does not.
 
 Describe a simple model checker for CTL over Kripke structures in pseudocode.
 
+\subsubsection{Solution}
+
+Clarke, Emerson and Sistla describe an algorithm to check CTL formulas in
+their article “Automatic Verification of Finite-State Concurrent Systems Using
+Temporal Logic Specifications”~\cite{Clarke1986AutomaticVerification}. We use
+this algorithm to check if a CTL formula holds in a certain state of a Kripke
+structure.\\
+
+All CTL formulas can be modeled, according to Clarke et al, using the following
+grammar:
+\begin{align*}
+    f & = p ~|~ ¬f ~|~ f ∧ f ~|~
+          \mathbf{AX} f ~|~ \mathbf{EX} f ~|~
+          \mathbf{A}[f \mathbf{U} f] ~|~ \mathbf{E}[f \mathbf{U} f]\\
+    p & ~…~ \text{atomic proposition}
+\end{align*}
+
+At the beginning we need to divide the given CTL formula $f$ into its
+subformulas. A parser can be used for this purpose.\\
+
+Each state of the Kripke structure is already labeled by the atomic
+propositions holding in it. Therefore we start with formulas of length 2 (e.g.
+$\mathbf{AX} p$, $p₁ ∧ p₂$), check in which state these formulas hold and
+label the states accordingly. After that we continue with subformulas of
+length 3, then length 4 and so on, till we get to the length of the whole
+formula. After that we just need to check if a certain state $s$ is labeled
+with the formula $f$ to test if $s⊧f$ holds.
+
+\codeinput{model_check}
+
+The function \code{label(formula)} needs to support all operands mentioned in
+the grammar of CTL. We start with the code for $¬f$:
+
+\codeinput{label_not}
+
+The code for $f ∧ g$ looks quite similar:
+
+\codeinput{label_or}
+
+For formulas of the form $\mathbf{AX} f$ we check if $f$ holds for every
+neighbor of a certain state.
+
+\codeinput{label_AX}
+
+The operation needed to handle the operator $\mathbf{EX}$ are quite similar to
+the ones needed for formulas of the form $\mathbf{AX} f$. We need to check if
+$f$ holds for one of the neighbours of each state.
+
+\codeinput{label_EX}
+
+For $A[f U g]$ we use the same methods as described by Clarke et al. We start
+with a depth first search on the states. For every unmarked state we call the
+procedure \code{au(state, formula)}.
+
+\codeinput{label_AU}
+
+In the procedure \code{au(state, formula)} we check if \code{formula} holds in
+the given state. We need to examine 2 basic cases where $\textbf{A}[f
+\textbf{U} g]$ holds:
+
+\begin{enumerate}
+
+    \item The state is already labeled by formula $g$
+
+    \item The state is labeled by formula $f$ and for all successors
+    (neighbours) of the state $\textbf{A}[f \textbf{U}g]$ is true
+
+\end{enumerate}
+
+In all other cases $s⊧\mathbf{A}[f \mathbf{U} g]$ is false.
+
+\codeinput{au}
+
+The last formula we need to check has the form $\mathbf{E}[f \mathbf{U} g]]$.
+Like before, we use the ideas laid out of by Clarke, Emerson, and Sistla. We
+start by labeling every formula where $g$ holds and walk backwards by using
+the inverse of the neighbor/successor relation.
+
+\codeinput{label_EU}
+
 \subsection{Exercise 8}
 
 Find a translation of the $\mathbf{U}$ operator to propositional logic in
