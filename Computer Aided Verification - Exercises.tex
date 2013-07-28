@@ -10,6 +10,8 @@
 \usepackage{polyglossia}
     \setmainlanguage{english}
     \setotherlanguage{german}
+% Caption support
+\usepackage{caption}
 % Context sensitive quotation
 \usepackage{csquotes}
 % Citations
@@ -472,10 +474,112 @@ the inverse of the neighbor/successor relation.
 
 \codeinput{label_EU}
 
+\section{Bounded Model Checking}
+
 \subsection{Exercise 8}
 
 Find a translation of the $\mathbf{U}$ operator to propositional logic in
-bounded model checking
+bounded model checking.
+
+\subsubsection{Solution}
+
+We use the procedure described in the article “Symbolic Model Checking without
+BDDs”~\cite{Biere1999SymbolicModelChecking} to translate formulas of the form
+$f\mathbf{U}g$ to propositional logic.
+
+\begin{minipage}[t]{0.45\textwidth}
+    \centering
+    \captionof{figure}{Path without loop}
+    \vspace{0.7cm}
+    \includegraphics[width=.72\textwidth]{Figures/Computation Path Without Loop}
+    \label{figure:Figures_Computation_Path_Without_Loop}
+\end{minipage}
+\begin{minipage}[t]{0.45\textwidth}
+    \centering
+    \captionof{figure}{Path with “(k,l)-loop”}
+    \includegraphics[width=\textwidth]{Figures/Computation Path With Loop.pdf}
+    \label{figure:Figures_Computation_Path_With_Loop}
+\end{minipage}
+
+We need to distinguish between two cases. Either the path of the
+counterexample contains a loop (see
+Figure~\ref{figure:Figures_Computation_Path_With_Loop}) or it does not (see
+Figure~\ref{figure:Figures_Computation_Path_Without_Loop}). For paths without
+a loop we define $⟦f⟧_k^i$ as the function which translates the temporal
+formula $f$ to a propositional formula. $k$ is the bound used by the model
+checker and therefore describes the length of a counterexample, while $i$ is
+the current position (state) in the counterexample. In addition we define
+$_l⟦f⟧_k^i$ which does basically the same as $⟦f⟧_k^i$, only for paths where
+there is a loop from state $k$ back to state $l$.
+
+\begin{description}[style=multiline, leftmargin=4cm]
+
+    \item[Path without loop] Since there is no loop in the path we just need
+    to check if at some state $s_j$ the formula $g$, and in all states before
+    that, the formula $f$ holds. For every possibility of $j$ we generate a
+    subformula. We combine these subformulas by conjunction:
+    \[
+        ⟦f\mathbf{U}g ⟧_kⁱ =
+        ⋁_{j=i}^{k}\left(⟦g⟧_k^j ∧ ⋀_{n=i}^{j-1} ⟦f⟧_kⁿ\right)
+    \]
+
+    \item[Path with loop] We now need to consider the additional possibility
+    that $f\mathbf{U}g$ holds on a path which starts at $sᵢ$, and continues
+    over the loop to end at a state before $s_i$.
+    \begin{align*}
+        _l⟦ f\mathbf{U}g ⟧_kⁱ =
+        & ⋁_{j=i}^{k}\left(_l⟦ g ⟧_k^j ∧ ⋀_{n=i}^{j-1} ~_l⟦ f ⟧_kⁿ\right) ∨\\
+        & ⋁_{j=l}^{i-1}\left(
+            _l⟦ g ⟧_k^j ∧
+            ⋀_{n=i}^{k} ~_l⟦ f ⟧_kⁿ ∧
+            ⋀_{n=k}^{j-1} ~_l⟦ f ⟧_kⁿ
+        \right)
+    \end{align*}
+
+\end{description}
+
+The translation of the rest of the temporal operators is listed in the article
+mentioned before~\cite{Biere1999SymbolicModelChecking}. For the sake of
+completeness we also write down the definitions here:
+
+\paragraph{Translation of an LTL formula without a loop}
+\begin{alignat*}{2}
+    ⟦p⟧_kⁱ              &:= p(sᵢ)\quad\quad&
+    ⟦¬p⟧_kⁱ             &:= ¬ p(sᵢ)\\
+    ⟦f ∧ g⟧_kⁱ          &:= ⟦f⟧_kⁱ ∧ ⟦g⟧_kⁱ\quad\quad&
+    ⟦f ∨ g⟧_kⁱ          &:= ⟦f⟧_kⁱ ∨ ⟦g⟧_kⁱ\\
+    ⟦\mathbf{G} f⟧_kⁱ   &:= false\quad\quad&
+    ⟦\mathbf{F} f⟧_kⁱ   &:= ⋁_{j=i}^k ⟦f⟧_k^{j}\\
+    ⟦\mathbf{X} f⟧_kⁱ   &:= \text{if } i<k \text{ then } ⟦f⟧_k^{i+1}
+                                           \text{ else } false
+\end{alignat*}
+
+\paragraph{Translation of an LTL formula with a loop}
+\begin{alignat*}{2}
+    _l⟦p⟧_kⁱ            &:= p(sᵢ)\quad\quad&
+    _l⟦¬p⟧_kⁱ           &:= ¬ p(sᵢ)\\
+    _l⟦f ∧ g⟧_kⁱ        &:= _l⟦f⟧_kⁱ ∧ ⟦g⟧_kⁱ\quad\quad&
+    _l⟦f ∨ g⟧_kⁱ        &:= _l⟦f⟧_kⁱ ∨ ⟦g⟧_kⁱ\\
+    _l⟦\mathbf{G} f⟧_kⁱ &:= ⋀_{j=min(i,l)^k} ~ _l⟦f⟧_kⁱ\quad\quad&
+    _l⟦\mathbf{F} f⟧_kⁱ &:= ⋁_{j=min(i,l)}^k ~ _l⟦f⟧_k^{j}\\
+    _l⟦\mathbf{X} f⟧_kⁱ &:= _l⟦f⟧_k^{succ(i)}\quad\quad&
+    succ(i)             &:= l \text{ if } i = k \text{ else } i+1
+\end{alignat*}
+
+We also include additional formulas we can use to translate a certain Kripke
+structure $M$, and the temporal formula $f$, here, to show how we are able to
+process loops with propositional logic.
+\begin{alignat*}{2}
+    _l L _k = T(s_k, s_l)\quad\quad&
+    L_k = ⋁_{l=0}^k ~ _l L _k
+\end{alignat*}
+\[
+    ⟦M, f⟧_k := ⟦M⟧_k ∧
+    \left(
+          \left( ¬ L_k ∧ ⟦f⟧_k^0 \right) ∨
+          ⋁_{l=0}^k \left( _l L _k ∧ _l ⟦ f ⟧_k^0 \right)
+    \right)
+\]
 
 \subsection{Exercise 9}
 
