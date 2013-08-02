@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# coding=utf-8
 
 # -----------------------------------------------------------------------------
 # 	Support for generating formulas from a given BDD.
