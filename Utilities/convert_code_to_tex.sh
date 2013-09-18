@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------------
 #   Converts source-code files to LaTeX files with syntax highlighting
 #
-#   Version:    7
+#   Version:    8
 #   Date:       2013-09-18
 #   Author:     René Schwaiger (sanssecours@f-m.fm)
 #
@@ -86,7 +86,20 @@ function convert_to_tex()
 input_dir=Pseudocode
 output_dir=Code
 
+# Rename extension of SMV files for conversion since NuSMV is not supported by
+# `highlight`
+for files in "$input_dir"/*.smv
+do
+    mv "$files" "${files%.smv}.hs"
+done
+
 # Convert the files
 convert_to_tex "$input_dir" "$output_dir"
+
+# Undo: Rename extension of SMV files
+for files in "$input_dir"/*.hs
+do
+    mv "$files" "${files%.hs}.smv"
+done
 
 echo "Done with conversion"

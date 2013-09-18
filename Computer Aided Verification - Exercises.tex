@@ -61,7 +61,7 @@
 
 \newcommand{\Title}{Exercises}
 \newcommand{\TitleDescription}{Computer Aided Verification}
-\newcommand{\Version}{1}
+\newcommand{\Version}{2}
 \newcommand{\Subject}
     {Solutions for the exercises of the course Computer Aided Verification}
 \newcommand{\KeyWords}{BDD, Kripke structure}
@@ -637,6 +637,58 @@ the one shown in Figure~\ref{figure:Figures_Kripke_Structure_Exercise_10}.
 Show how you can use SMV to solve chess problems. “Given a chess board, white
 has a winning strategy in 3 moves.” How do you describe the board? What is
 the specification?
+
+\subsubsection{Solution}
+
+We specify a smaller version of the problem, where we have only two chess
+pieces: a white rook and the black king. This has the advantage that we always
+know which chess piece will be moved in the next turn by either side.\\
+
+To model which side has to move next, we specify the module \texttt{shared}
+and define the variable \texttt{next\_move} inside this module. This variable
+alternates between the values \texttt{BLACK} and \texttt{WHITE}.\\
+
+We also define the modules \texttt{king} and \texttt{rook} which define the
+possible movements of these two chess pieces. Each piece contains two
+variables \texttt{position\_column} and \texttt{position\_row}, which specify
+the position of the chess piece on the board.\\
+
+In the \texttt{main} module we instantiate the \texttt{shared} module
+(\texttt{shared\_variables}) and give a reference of this variable to the
+instance of the white rook (\texttt{white\_rook}) and the black king
+(\texttt{black\_king}) we defined in the lines before. We also create the
+variables \texttt{black\_defeated} and \texttt{white\_defeated} here, which
+tell us if one of the two sides has won. We use the variable
+\texttt{black\_defeated} in the LTL specification
+
+\[
+    ¬\left(
+        \left(X X X X ~ ¬\text{\texttt{black\_defeated}}\right) ∧
+        \left(X X X X X ~ \text{\texttt{black\_defeated}}\right)
+    \right),
+\]
+
+which states that there is no way that White is able to win in exactly 3
+moves. If there is a counter-model to this specification, then we get a
+strategy where White can win in 3 moves.\\
+
+The following listing shows the full NuSMV code for the simplified chess
+simulation.
+
+\codeinput{chess}
+
+We get the following counter model for our specification which we visualized
+in Figure~\ref{figure:Figures_Chess_White_Wins_In_Three_Moves}:
+
+\codeinput{counterexample}
+
+\begin{figure}[htbp]
+    \centering
+        \includegraphics[width=.48\textwidth]
+            {Figures/Chess - White Wins In Three Moves.pdf}
+    \caption{A (rather unlikely) way for White to win in three moves}
+    \label{figure:Figures_Chess_White_Wins_In_Three_Moves}
+\end{figure}
 
 % -- Bibliography -------------------------------------------------------------
 

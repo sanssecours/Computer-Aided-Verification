@@ -1,0 +1,129 @@
+-------------------------------------------------------------------------------
+--  Specify a simplified simulation of a chess game
+--
+--  Version: 1
+--  Date:    2013-09-17
+--  Author:  René Schwaiger (sanssecours@f-m.fm)
+-------------------------------------------------------------------------------
+
+-- Modules --------------------------------------------------------------------
+
+MODULE shared
+    ---------------------------------------------------------------------------
+    -- Define data shared by both Black and White.
+    ---------------------------------------------------------------------------
+    VAR
+        -- Specifies which side has to make the next move
+        next_move : {BLACK, WHITE};
+    ASSIGN
+        -- White always begins the game
+        init(next_move) := WHITE;
+        next(next_move) := case
+                               next_move = BLACK: WHITE;
+                               TRUE:              BLACK;
+                           esac;
+
+MODULE rook(the_color, initial_position_row, initial_position_column, shared)
+    ---------------------------------------------------------------------------
+    -- Specify the rook chess figure.
+    ---------------------------------------------------------------------------
+    FROZENVAR
+        color : {BLACK, WHITE};
+    VAR
+        position_row    : 1..8;
+        position_column : 1..8;
+    ASSIGN
+        init(color) := the_color;
+        init(position_column) := initial_position_column;
+        init(position_row)    := initial_position_row;
+    TRANS
+        case
+            shared.next_move = color:
+                -- A rook can either move vertically or horizontally
+                (next(position_column) = position_column &
+                 next(position_row) != position_row) |
+                (next(position_column) != position_column &
+                 next(position_row) = position_row);
+            TRUE:
+                next(position_row) = position_row &
+                next(position_column) = position_column;
+        esac;
+
+MODULE king(the_color, initial_position_row, initial_position_column, shared)
+    ---------------------------------------------------------------------------
+    -- Specify the king chess figure.
+    ---------------------------------------------------------------------------
+    FROZENVAR
+        color : {BLACK, WHITE};
+    VAR
+        position_row    : 1..8;
+        position_column : 1..8;
+    ASSIGN
+        init(color) := the_color;
+        init(position_column) := initial_position_column;
+        init(position_row)    := initial_position_row;
+    TRANS
+        case
+            shared.next_move = color:
+                -- A king may move one field in any direction
+                (next(position_column) = position_column - 1 &
+                 next(position_row) = position_row - 1)
+                |
+                (next(position_column) = position_column &
+                 next(position_row) = position_row + 1)
+                |
+                (next(position_column) = position_column + 1 &
+                 next(position_row) = position_row + 1)
+                |
+                (next(position_column) = position_column + 1 &
+                 next(position_row) = position_row)
+                |
+                (next(position_column) = position_column + 1 &
+                 next(position_row) = position_row - 1)
+                |
+                (next(position_column) = position_column &
+                 next(position_row) = position_row - 1)
+                |
+                (next(position_column) = position_column - 1 &
+                 next(position_row) = position_row - 1)
+                |
+                (next(position_column) = position_column - 1 &
+                 next(position_row) = position_row);
+            TRUE:
+                next(position_column) = position_column &
+                next(position_row) = position_row;
+        esac;
+
+-- Main -----------------------------------------------------------------------
+
+MODULE main
+    VAR
+        shared_variables : shared;
+        white_rook : rook(WHITE, 1, 1, shared_variables);
+        black_king : king(BLACK, 8, 8, shared_variables);
+        black_defeated : boolean;
+        white_defeated : boolean;
+    ASSIGN
+        init(black_defeated) := FALSE;
+        init(white_defeated) := FALSE;
+        next(black_defeated) :=
+            case
+                next(white_rook.position_column) = black_king.position_column &
+                next(white_rook.position_row) = black_king.position_row &
+                !white_defeated: TRUE;
+                TRUE:            black_defeated;
+            esac;
+        next(white_defeated) :=
+            case
+                white_rook.position_column = next(black_king.position_column) &
+                white_rook.position_row = next(black_king.position_row) &
+                !black_defeated: TRUE;
+                TRUE:            white_defeated;
+            esac;
+    LTLSPEC
+        -- White has a winning strategy in 3 moves
+        -----------------------------------------------------------------------
+        --                X  X  X  X  X     |   W....White Moves
+        -- current move:  W  B  W  B  W     |   B....Black Moves
+        -----------------------------------------------------------------------
+        ! ((X X X X !black_defeated)  & (X X X X X black_defeated));
