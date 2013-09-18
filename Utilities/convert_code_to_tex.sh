@@ -1,17 +1,17 @@
 #! /bin/bash
 
 # -----------------------------------------------------------------------------
-#   Converts sourcecode files to LaTeX files with syntax highlighting
+#   Converts source-code files to LaTeX files with syntax highlighting
 #
-#   Version:    6
-#   Date:       2013-05-25
+#   Version:    7
+#   Date:       2013-09-18
 #   Author:     René Schwaiger (sanssecours@f-m.fm)
 #
 # -----------------------------------------------------------------------------
 
 # -- Constants ----------------------------------------------------------------
 
-# To check for successfull execution of a command
+# To check for successful execution of a command
 EXIT_SUCCESS="0"
 
 # -- Functions ----------------------------------------------------------------
@@ -21,7 +21,7 @@ EXIT_SUCCESS="0"
 #
 #   Arguments:
 #
-#       $0 - The message which should be displayed if there was an error.
+#       $1 - The message which should be displayed if there was an error.
 #
 # -----------------------------------------------------------------------------
 function exit_on_failure()
@@ -35,34 +35,36 @@ function exit_on_failure()
 # -----------------------------------------------------------------------------
 #   Convert source code files to (Xe)LaTeX files.
 #
-#   Converts the source code files given in the array input_files in the folder
-#   input_dir array to LaTeX code with syntax highlithing naming the resulting
-#   files with the names given in the array output_files storing them in the
-#   directory given by output_dir.
+#   Converts all files in the folder `input_dir` to LaTeX code with syntax
+#   highlighting. The resulting files will be stored, with the same base name
+#   as the code files, only changing the extension to `.tex`, in the directory
+#   `output_dir`.
 #
 #   Arguments:
 #
-#       input_dir    - The directory where the source code files are located.
-#       input_files  - The file which should be converted.
-#       output_dir   - The directory where the converted LaTeX files are saved.
-#       output_files - The name of the converted files.
+#       $1 - The location of the source code files.
+#       $2 - The directory where the converted LaTeX files will be saved.
 #
 # -----------------------------------------------------------------------------
 function convert_to_tex()
 {
-    # Use highlih to convert the files
+    input_dir="$1"
+    output_dir="$2"
+
+    # Use highlight to convert the files
     # --------------------------------
     # -o Latex          Generate LaTeX output
     # -f                Omit header and footer in output
     # -t 4              Tabsize = 4
-    # -s rand01         Style = rand01
     # --no-trailing-nl  Omit trailing newline
     convert='highlight -O latex --encoding=utf8 --no-trailing-nl -f -t 4 -i'
 
-    for (( file_index = 0 ; file_index < "${#input_files[@]}" ; file_index++ ))
+    # Create output directory if it does not exist already
+    mkdir -p "$output_dir"
+
+    for code_file in "$input_dir"/*.*
         do
-            code_file="$input_dir"${input_files[$file_index]}
-            tex_file="$output_dir${output_files[$file_index]}.tex"
+            tex_file="$output_dir"/"`basename ${code_file%\.*}`.tex"
 
             # Convert single file
             $convert "$code_file" > "$tex_file"
@@ -74,40 +76,17 @@ function convert_to_tex()
                 "$tex_file" > tmp.txt
             mv tmp.txt "$tex_file"
 
-            # Display conversion step on success
+            # Display conversion message on success
             echo "${code_file} => ${tex_file}"
     done
 }
 
 # -- Main ---------------------------------------------------------------------
 
-input_dir="Pseudocode/"
-output_dir='Code/'
-# e.g. "hello.sh"
-input_files=(bdd.py
-             bdd_to_formula.py
-             model_check.py
-             label_not.py
-             label_or.py
-             label_AX.py
-             label_EX.py
-             label_AU.py
-             label_EU.py
-             au.py)
-# e.g. "hello"
-output_files=(bdd
-              bdd_to_formula
-              model_check
-              label_not
-              label_or
-              label_AX
-              label_EX
-              label_AU
-              label_EU
-              au)
-# Create ouptut directory if it does not exist already
-mkdir -p "$output_dir"
+input_dir=Pseudocode
+output_dir=Code
+
 # Convert the files
-convert_to_tex
+convert_to_tex "$input_dir" "$output_dir"
 
 echo "Done with conversion"
