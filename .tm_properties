@@ -1,4 +1,4 @@
 projectDirectory = "$CWD"
-projectIcon = "😱"
-windowTitle = "$project $projectIcon $displayNameRight"
+projectIcon      = "😱"
+windowTitle      = "$project $projectIcon $TM_DISPLAYNAME"
 exclude          = "Code"
