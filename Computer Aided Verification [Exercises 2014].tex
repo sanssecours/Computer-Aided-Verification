@@ -102,7 +102,11 @@ The results above showed us that lemmas 2, 3 and 4 on slide 5 hold.
 If we apply $τ$ on each set and take the union we have $τ(P₁) ~∪~ τ(P₂) ~∪~ … ∪~ τ(P_n)$. Since $τ$ is a monotone function we have $P₁ ⊆ P₂ ⊆ P₃ ⊆ … ⊆ P_n ⇒ τ(P₁) ⊆ τ(P₂) ⊆ … ⊆ τ(P_n)$. From this we get that the union of $τ(P₁) ~∪~ τ(P₂) ~∪~ … ~∪~ τ(P_n)$ is the same as $τ[P_n]$. Therefore we have
 $τ[∪ᵢPᵢ] = ∪ᵢτ[Pᵢ]$. This shows that $τ$ is a continuous function.
 
-\subsection{Show that no LTL formula can express AG EF p}
+\section{Exercise 2}
+
+Show that no LTL formula can express $AG EF p$.
+
+\subsection{Solution}
 
 We use the proof described on page 219 of the book “Logic in Computer Science”~\cite{Huth2004logic}. We assume that there is a LTL formula $A[φ]$ which is equivalent to the CTL formula $AG EF p$. The CTL formula $s₀ ⊧ AG EF p$ holds in the model $𝓜$ shown in Figure~\ref{figure:State_Diagram_AGEFp}. Therefore $s₀ ⊧ A[φ]$ also holds in model $𝓜$. Since $A[φ]$ holds in $s₀$ of the model $𝓜$ it also needs to be satisfied in $s₀$ of $𝓜’$, which only contains a subset of the paths of $𝓜$. Since this is not the case we have a contradiction and therefore have shown that there is not LTL formula equivalent to $AG EF p$.
 
