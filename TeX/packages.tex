@@ -1,0 +1,17 @@
+% -- Common Packages ----------------------------------------------------------
+
+% Language
+\usepackage{polyglossia}
+    \setmainlanguage{english}
+    \setotherlanguage{german}
+% Context sensitive quotation
+\usepackage{csquotes}
+% Citations
+\usepackage[style=alphabetic, backend=biber]{biblatex}
+\IfFileExists{References.bib}{\addbibresource{References.bib}}{}
+% Support highlighting of certain parts of the text
+\usepackage{framed}
+% Support for unicode math fonts
+\usepackage{unicode-math}
+% Extended color support
+\usepackage[x11names]{xcolor}

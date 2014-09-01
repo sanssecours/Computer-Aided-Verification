@@ -1,0 +1,108 @@
+%!TEX TS-program = xelatex
+
+% -- Document Class -----------------------------------------------------------
+
+\documentclass[a4paper, 12pt]{article}
+
+% -- Imports ------------------------------------------------------------------
+
+% Common packages
+\input{TeX/packages}
+% Document specific packages
+\input{TeX/document_packages}
+% Document specific properties
+\input{TeX/document_properties}
+% Custom macros
+\input{TeX/macros}
+
+% -- Document -----------------------------------------------------------------
+
+\begin{document}
+\input{TeX/document_start}
+
+% -- Text ---------------------------------------------------------------------
+
+\section{Exercise 1}
+
+\newcommand{\LFP}{\mathbf{lfp}~Z~[τ(Z)]}
+\newcommand{\GFP}{\mathbf{gfp}~Z~[τ(Z)]}
+
+Show the results about $\mathbf{lfp}$ on slides 4 and 5 of “alecture3.pdf”.
+
+\paragraph{Slide 4}
+
+Let $τ: Pred(S) → Pred(S)$ be a predicate transformer, then:
+
+\begin{enumerate}
+
+    \item If $τ$ is monotonic then it has a least fixed-point $\LFP$, and a greatest fixed-point $\GFP$.
+
+    \item $\LFP = ∩\{ Z ∣ τ(Z) = Z \}$ whenever $τ$ is monotonic.
+
+    \item $\LFP = ∪ᵢτⁱ(False)$ whenever $τ$ is also $∪$-continuous;
+
+    \item $\GFP = ∪\{ Z ∣ τ(Z) = Z \}$ whenever $τ$ is monotonic.
+
+    \item $\GFP = ∩ᵢτⁱ(True)$ whenever $τ$ is also $∪$-continuous;
+
+\end{enumerate}
+
+\paragraph{Slide 5}
+
+Let $M$ be a finite Kripke structure and let $τ$ be a monotonic predicate transformer on $S$.
+
+\begin{enumerate}
+
+    \item The functional $τ$ is both $∪$-continuous and $∩$-continuous.
+
+    \item For every $i$, $τⁱ(False) ⊆ τⁱ⁺¹(False)$ and $τⁱ(True) ⊇ τⁱ⁺¹(True)$.
+
+    \item There is an integer $i₀$ such that for every $j≥i₀$, $τ^j(False) = τ^{i₀}(False)$. There is an integer $j₀$ such that for every $j≥j₀$, $τ^j(True) = τ^{j₀}(True)$.
+
+    \item There is an integer $i₀$ such that $\LFP$ is $τ^{i₀}(False)$. There is an integer $j₀$ such that $\GFP$ is $τ^{j₀}(True)$.
+
+\end{enumerate}
+
+\subsection{Solution}
+
+\subsubsection{Slide 4}
+
+\paragraph{Existence of the Fixed Points}
+
+\begin{sloppypar}
+We show that if $τ$ is monotonic, then there exists a least fixed point. We use the same arguments as an article on “Mathematics Stack Exchange”~\cite{GitGud2013CompleteLatticeMonotoneFunction}. We define the following set:
+\end{sloppypar}
+\[
+    A = \left\{ Z ∣ τ(Z) ⊆ Z \right\}
+\]
+We now take the intersection of all elements in $A$: $α = ∩A$ and prove that $τ(α)$ is a lower bound of $A$. Let $Z$ be any element of $A$. Since $τ$ is monotone we have that $α ⊆ Z$ implies $τ(α) ⊆ τ(Z)$. By definition $τ(Z) ⊆ Z$ therefore we have $τ(α) ⊆ Z$. Since we took an arbitrary element $Z$ from $A$ we have that $τ(α)$ is an lower bound of $A$ and therefore $\color{orange}{τ(α) ⊆ α}$.\\
+
+We use the last fact together with the monotonicity of $τ$ to get $τ(τ(α)) ⊆ τ(α)$. Therefore we have $τ(α) ∈ A$ and thus $\color{orange}{α ⊆ τ(α)}$.\\
+
+We have found a fixed point: $τ(α) = α$. This fixed point is the least fixed point by construction. The proof for the existence for the greatest fixed point is basically the same, using intersection instead of union and $⊇$ instead of $⊆$.\\
+
+We now show that $β = ∩\{ Z ∣ τ(Z) = Z \}$ is a least fixed point of $τ$. We already proved that $α = ∩\{ Z ∣ τ(Z) ⊆ Z \}$ is a least fixed point. Clearly $β ⊆ α$. We now need to show that $β$ is indeed a fixed point…
+
+\subsubsection{Slide 5}
+
+\paragraph{Calculating the Fixed Point By Applying τ Multiple Times}
+
+We show that $\LFP = τⁱ(False)$. We start by applying $τ$ on $False$ once. Since $False$ is the smallest element of the lattice we have $False ⊆ τ(False)$. From the monotonicity of $τ$ we derive $τ(False) ⊆ τ(τ(False))$. This leads to the increasing chain:
+\[
+    False ⊆ τ(False) ⊆ τ²(False)… ⊆ τⁱ(False) = τⁱ⁺¹(False)
+\]
+The last equation follows from the fact that we work we assume a finite set of $i$ states. Between one application of $τⁿ(False)$ and $τⁿ⁺¹(False)$ at least one additional state will be matched by the predicate or we have $τⁿ(False) = τⁿ⁺¹(False) = … = τⁱ(False)$. We have found the least fixed point of $τ$.\\
+
+We can use exactly the same arguments for finding the greatest fixed point, except that we derive a descending chain starting with $τ(True) ⊆ True$. This will lead us to the greatest fixed point in at most $i+1$ steps.
+
+The results above showed us that lemmas 2, 3 and 4 on slide 5 hold.
+
+\paragraph{$𝜏$ is both $∪$-continuous and $∩$-continuous} We show that $τ$ is $∪$-continuous. We assume $P₁ ⊆ P₂ ⊆ P₃ ⊆ … ⊆ P_n$. Since $P_n$ contains all other sets we have $∪ᵢPᵢ=P_n$. If we now apply $τ$ we get $τ[∪ᵢPᵢ] = τ[P_n]$.\\
+
+If we apply $τ$ on each set and take the union we have $τ(P₁) ~∪~ τ(P₂) ~∪~ … ∪~ τ(P_n)$. Since $τ$ is a monotone function we have $P₁ ⊆ P₂ ⊆ P₃ ⊆ … ⊆ P_n ⇒ τ(P₁) ⊆ τ(P₂) ⊆ … ⊆ τ(P_n)$. From this we get that the union of $τ(P₁) ~∪~ τ(P₂) ~∪~ … ~∪~ τ(P_n)$ is the same as $τ[P_n]$. Therefore we have
+$τ[∪ᵢPᵢ] = ∪ᵢτ[Pᵢ]$. This shows that $τ$ is a continuous function.
+
+% -- Bibliography -------------------------------------------------------------
+
+\input{TeX/document_bibliography}
+\end{document}

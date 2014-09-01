@@ -1,0 +1,65 @@
+% -- Title-Page ---------------------------------------------------------------
+
+\begin{titlepage}
+    \begin{center}
+        % Title and title-description
+        {\Huge\Zapfino\Title}
+        \vskip 0.5cm
+        {\color{aqua}\hrule}
+        \vskip 0.5cm
+        {\Large\textit\TitleDescription}
+        \vskip 14cm
+    \end{center}
+
+    % Document information
+    \begin{leftbar}
+        \begin{tabular}{ll}
+            \textbf{Author}  & \AuthorOne\\
+            \textbf{Mail}    & \MailOne\\
+            \textbf{Version} & \Version\\
+            \textbf{Date}    & \today
+        \end{tabular}
+    \end{leftbar}
+
+\end{titlepage}
+
+% -- Table of Contents --------------------------------------------------------
+
+% Set section format for table of contents
+\titleformat{\section}{\sffamily\bfseries}{}{0pt}{}[{\color{aqua}\hrule}]
+
+% Set separation of dots between name of section and page number to such a high
+% value that there will be no points in the table of contents
+\makeatletter \renewcommand{\@dotsep}{10000} \makeatother
+% Use blank header and footer
+\pagestyle{empty}
+% Start on new page
+\newpage
+% The table of contents starts at the second page
+\setcounter{page}{2}
+% Set table of contents
+\tableofcontents
+
+% -- Section & Paragraph Style ------------------------------------------------
+
+% Set format for section
+\titleformat{\section}
+    {\large\sffamily\bfseries}  % Large, bold, sans serif font for section
+    {}                          % No format applied to whole title
+    {0pt}                       % No separation between label and title
+    {\thesection~·~}            % Start with section number
+    [{\color{aqua}\hrule}]      % Underline with blue ruler
+
+% Set format for other sections and paragraphs
+% Color = orchid, Font = bold, sans serif
+\titleformat*{\subsection}{\color{orchid}\sffamily\bfseries}
+\titleformat*{\subsubsection}{\color{orchid}\sffamily\bfseries}
+\titleformat*{\paragraph}{\color{orchid}\sffamily\bfseries}
+\titleformat*{\subparagraph}{\color{orchid}\sffamily\bfseries}
+
+% -- Page Style ---------------------------------------------------------------
+
+% Start with text on a new page
+\newpage
+% Display headers and footers
+\pagestyle{scrheadings}
