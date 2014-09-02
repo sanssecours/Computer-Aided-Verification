@@ -284,38 +284,7 @@ Prove the equivalence for $\mathbf{A}(f \mathbf{U} g)$ on page 16.
 
 \subsubsection{Solution}
 
-We need to prove that $\mathbf{A}(f \mathbf{U} g)$ is equivalent to $¬E(¬g
-\mathbf{U} ¬f ∧ ¬g) ∧ ¬\mathbf{EG} ¬g$. We use the following equivalences:
-
-\begin{enumerate}[label=(\arabic*)]
-    \item $\mathbf{A} f ⇔ ¬\mathbf{E}¬f$
-    \item $¬(f \mathbf{U} g) ⇔ (\mathbf{G}¬g ∨ ¬g \mathbf{U} ¬f ∧ ¬g)$
-    The formula above is true since for $f$ until $g$ to not hold:
-        \begin{enumerate}
-
-            \item $g$ has to not hold at all (there exists no $k$ such that
-            $π^k⊧g$) or
-
-            \item $f$ might hold at first, while $g$ does not hold, but $g$
-            does not hold after that ($¬g \mathbf{U} ¬f ∧ ¬g$).
-
-        \end{enumerate}
-
-    \item $\mathbf{E}(f ∨ g) ⇔ \mathbf{E}f ∨ \mathbf{E}g$
-    \item $¬ (f ∨ g) ⇔ ¬f ∧ ¬g$
-\end{enumerate}
-
-to deduct the following proof:
-\begin{align*}
-    \mathbf{A}\left(f \mathbf{U} g\right)
-    & \stackrel{(1)}{⇔} ¬\mathbf{E} ¬\left(f\mathbf{U} g\right)\\
-    & \stackrel{(2)}{⇔} ¬\mathbf{E} \left(\left(\mathbf{G}¬g\right) ∨
-      \left(¬g\mathbf{U} ¬f ∧ ¬g\right)\right)\\
-    & \stackrel{(3)}{⇔} ¬\left(\mathbf{EG}¬g ∨
-      \mathbf{E}\left(¬g\mathbf{U} ¬f ∧ ¬g\right)\right)\\
-    & \stackrel{(4)}{⇔} ¬\mathbf{EG}¬g ∧ ¬\mathbf{E}\left(¬g\mathbf{U} ¬f ∧
-      ¬g\right)\\
-\end{align*}
+\input{TeX/equivalence_AU_solution}
 
 \subsection{Exercise 5}
 
