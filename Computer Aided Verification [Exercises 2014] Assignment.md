@@ -4,7 +4,7 @@
 
 3. Show the definition of AU on slide 16 of alecture2.pdf
 
-4. Prove or disprove that the results on slide 16 or alecture2.pdf also hold with fairness constraints.
+4. Prove or disprove that the results on slide 16 of alecture2.pdf also hold with fairness constraints.
 
 5. Implement a solver for the Rubik's cube in SMV or SPIN. Idea: Implement the moves of the cube as nondeterministic steps. Specify that the solution is not reachable, and let the model checker compute a solution as a counterexample to this specification.
 
