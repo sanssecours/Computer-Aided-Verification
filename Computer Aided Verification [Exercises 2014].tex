@@ -142,6 +142,24 @@ Prove or disprove that the results on slide 16 or “alecture2.pdf”:
 \end{enumerate}
 also hold with fairness constraints.
 
+\subsection{Solution}
+
+We use the notation $A_C$ and $E_C$ to refer to “fair” versions of the operators $A$ and $E$. These fair versions of the $A$ and $E$ operator guarantee that on a path each of the fairness constraints $h_k ∈ H$ occurs infinitely often.
+
+\begin{description}[style=multiline, leftmargin=3.8cm]
+
+    \item[$A_C X f = ¬E_CX(¬f)$] Let us start by assuming that $A_C X f$ holds. This means that we only have fair paths where $f$ holds in the next state. But this also implies that there is no fair path where $¬f$ holds in the next state. We can write this down as $¬E_CX(¬f)$. Therefore $A_C X f ⇒ ¬E_CX(¬f)$ holds. The converse, $¬E_CX(¬f) ⇒ A_C X f$, is of course also true. Therefore we have $AX f = ¬EX(¬f)$.
+
+    \item[$A_C Gf = ¬E_C F(¬f)$] We assume that there are only fair paths where $f$ holds globally: $A_C Gf$. This means that no fair path where $¬ f$ holds exist: $¬E_C F(¬f)$.\\
+
+    The converse is of course also true: If no fair path where $¬f$ holds somewhere on the path exist, then $f$ has to hold globally on all fair paths.
+
+    \item[$A_C Ff = ¬E_C G(¬f)$] We assume $A_C Ff$. Therefore we have that for all fair paths somewhere in the future $f$ holds. This implies that there is no fair path, where $¬f$ holds all the time. The converse is also true: If there exists no fair path where $¬f$ holds all the time then on all fair paths there has to hold $f$ sometimes in the future.
+
+    \item[$E_C Ff = E(true~U~f)$] We assume that there exists a fair path  where sometimes in the future $f$ holds: $E_C Ff$. In this case on this fair path $true$ holds until $f$ holds since $true$ holds in every state by definition.
+
+\end{description}
+
 % -- Bibliography -------------------------------------------------------------
 
 \input{TeX/document_bibliography}
