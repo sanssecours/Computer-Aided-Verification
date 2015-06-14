@@ -89,9 +89,9 @@
 
 \newcommand{\codeinput}[1]
 {
-    \begin{leftbar}
-        {\fontsize{9pt}{11pt}\input{Code/#1}}
-    \end{leftbar}
+    {\color{lightgray}\hrule}\vskip 0.3 cm
+    {\fontsize{9pt}{11pt}\input{Code/#1}}
+    \vskip 0.3 cm{\color{lightgray}\hrule}
 }
 
 \newcommand{\code}[1]
@@ -231,6 +231,30 @@
 \subsection{Exercise 1}
 
 Give a linear time algorithm for BDD isomorphism as defined on page 9.
+
+\subsubsection{Solution}
+
+The following code assumes the existence of the functions:
+
+\begin{description}[style=multiline, leftmargin=3.5cm]
+    \item[\texttt{is\_terminal(v)}] Returns \texttt{True} if \texttt{v} is a terminal vertex and \texttt{False} otherwise
+\end{description}
+
+\paragraph{Nonterminal Vertices}
+
+\begin{description}[style=multiline, leftmargin=3.5cm]
+    \item [\texttt{var(v)}] Returns the variable of a BDD vertex.
+    \item [\texttt{low(v)}] Returns the “low” successor of the BDD vertex (v is set to 0)
+    \item [\texttt{high(v)}] Returns the “high” successor of the BDD vertex (v is set to 1)
+\end{description}
+
+\paragraph{Terminal Vertices}
+
+\begin{description}[style=multiline, leftmargin=3.5cm]
+    \item[\texttt{high(v)}] Returns the value of v (Either 0 or 1)
+\end{description}
+
+\codeinput{isomorphic}
 
 \subsection{Exercise 2}
 
