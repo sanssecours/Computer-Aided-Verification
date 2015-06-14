@@ -56,7 +56,7 @@
 
 \newcommand{\Title}{Exercises}
 \newcommand{\TitleDescription}{Computer Aided Verification}
-\newcommand{\Version}{2}
+\newcommand{\Version}{1}
 \newcommand{\Subject}
     {Solutions for the exercises of the course Computer Aided Verification}
 \newcommand{\KeyWords}{BDD, Kripke structure}
@@ -263,6 +263,25 @@ Show that the three operations on page 12 commute.
 \subsection{Exercise 3}
 
 Describe a size-efficient BDD for the relation “a<b” for n-bit integer numbers.
+
+\subsubsection{Solution}
+
+We assume that:
+
+\begin{itemize}
+    \item $a$ has the form $a_na_{n-1}…a_0$, where $a_n$ ist the most significant bit.
+    \item $b$ is encoded in the same way as $a$.
+    \item Both $a$ and $b$ are positive numbers.
+\end{itemize}
+
+Figure~\ref{fig:Figures_OBDD_Smaller} shows the BDD that encodes the boolean operation “a<b”.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.54\textwidth]{Figures/OBDD Smaller.pdf}
+  \caption{An OBBD for the operation “a<b”}
+  \label{fig:Figures_OBDD_Smaller}
+\end{figure}
 
 \subsection{Exercise 4}
 
