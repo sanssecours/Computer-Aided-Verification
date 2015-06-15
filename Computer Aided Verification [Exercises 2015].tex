@@ -2,7 +2,7 @@
 
 % -- Document Class -----------------------------------------------------------
 
-\documentclass[a4paper, 12pt]{article}
+\documentclass[a4paper, 11pt]{article}
 
 % -- Packages -----------------------------------------------------------------
 
@@ -236,13 +236,13 @@ Give a linear time algorithm for BDD isomorphism as defined on page 9.
 
 The following code assumes the existence of the functions:
 
-\begin{description}[style=multiline, leftmargin=3.5cm]
+\begin{description}[style=multiline, leftmargin=3cm]
     \item[\texttt{is\_terminal(v)}] Returns \texttt{True} if \texttt{v} is a terminal vertex and \texttt{False} otherwise
 \end{description}
 
 \paragraph{Nonterminal Vertices}
 
-\begin{description}[style=multiline, leftmargin=3.5cm]
+\begin{description}[style=multiline, leftmargin=3cm]
     \item [\texttt{var(v)}] Returns the variable of a BDD vertex.
     \item [\texttt{low(v)}] Returns the “low” successor of the BDD vertex (v is set to 0)
     \item [\texttt{high(v)}] Returns the “high” successor of the BDD vertex (v is set to 1)
@@ -250,16 +250,83 @@ The following code assumes the existence of the functions:
 
 \paragraph{Terminal Vertices}
 
-\begin{description}[style=multiline, leftmargin=3.5cm]
+\begin{description}[style=multiline, leftmargin=3cm]
     \item[\texttt{high(v)}] Returns the value of v (Either 0 or 1)
 \end{description}
 
 \codeinput{isomorphic}
 
+\newpage
 \subsection{Exercise 2}
 
 Show that the three operations on page 12 commute.
 
+\subsubsection{Solution}
+
+We have the following operations:
+
+\begin{description}[style=multiline, leftmargin=3.6cm]
+    \item[Remove duplicate terminals] Eliminate all but one terminal vertex with a given label and redirect all arcs to the eliminated vertices to the remaining one.
+    \item[Remove duplicate nonterminals] If nonterminals $u$ and $v$ have $high(u)=high(v)$, $low(u)=low(v)$ and $high(u)=high(v)$, then eliminate one of the two vertices and redirect all incoming arcs to the other vertex.
+    \item[Remove redundant test] If nonterminal vertex $v$ has $low(v)=high(v)$, then eliminate $v$ and redirect all incoming arcs to $low(v)$.
+\end{description}
+
+We now use the following abbreviations for these operations:
+
+\begin{description}[style=multiline]
+    \item[dt()] Remove duplicate terminals
+    \item[dn()] Remove duplicate nonterminals
+    \item[rt()] Remove redundant test
+\end{description}
+
+To show that these operations are commutative — the order of application does not matter – we need to show the following:
+
+\begin{enumerate}
+    \item $dt(dn(bdd)) = dn(dt(bdd))$
+    \item $dt(rt(bdd)) = rt(dt(bdd))$
+    \item $dn(rt(bdd)) = rt(dn(bdd))$
+\end{enumerate}
+
+$bdd$ describes an arbitrary binary decision diagram.
+
+\paragraph{dt(dn(bdd)) = dn(dt(bdd))}
+
+The only place where the order of operations could matter is on the bottom of the graph, where nonterminal nodes connect to terminal nodes. In the other case the operations work on different parts of the tree.\\
+
+If we first remove duplicate nonterminal nodes, then theoretically we could remove one of the two terminal nodes, that we used if we first removed the duplicate terminals. Figure~\ref{fig:Figures_BDD_Removed_Terminals_And_Nonterminals} shows an example of this behaviour. This does however not change the semantics, since every terminal vertex $v$ with $value(v)=0$ is isomorphic to a vertex $u$ with $value(u)=0$. The same of course is true for terminal vertices that have a value of 1.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.9\textwidth]{Figures/BDD Removed Terminals And Nonterminals.pdf}
+  \caption{Removal of Terminal and Nonterminal Nodes in a BDD}
+  \label{fig:Figures_BDD_Removed_Terminals_And_Nonterminals}
+\end{figure}
+
+\paragraph{dt(rt(bdd)) = rt(dt(bdd))}
+
+This case is similar to the one before. The only place where the order of the operations matter is at the bottom of the tree.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.75\textwidth]{Figures/BDD Removed Terminals And Redundant Tests.pdf}
+  \caption{Removal of Redundant Test and Terminal Nodes in A BBD}
+  \label{fig:Figures_BDD_Removed_Terminals_And_Redundant_Tests}
+\end{figure}
+
+Since the removal of redundant test does not change the nodes at the bottom of the tree, all the nodes at the bottom stay. This also means that the reduction works on the same terminal nodes, regardless if we reduce the terminal nodes at the start or after we remove the redundant tests. This in turn means that the order of application does not matter. For an example of this behaviour take a look at Figure~\ref{fig:Figures_BDD_Removed_Terminals_And_Redundant_Tests}.
+
+\paragraph{dn(rt(bdd)) = rt(dn(bdd))}
+
+There is one possibility, where removing redundant tests and redundant nonterminals work on the same part of a BDD. Figure~\ref{fig:Figures_BDD_Removed_Nonterminals_And_Redundant_Tests} shows this possibility. The top part of the graph displays the result if redundant test are removed first. The bottom part shows the result if the redundant nonterminals are removed first. Both times we get the same result. This shows that even if both operations work on the same part of the graph, the application order does not matter.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.6\textwidth]{Figures/BDD Removed Nonterminals And Redundant Tests.pdf}
+  \caption{Removal of Redundant Nonterminals and Tests}
+  \label{fig:Figures_BDD_Removed_Nonterminals_And_Redundant_Tests}
+\end{figure}
+
+\newpage
 \subsection{Exercise 3}
 
 Describe a size-efficient BDD for the relation “a<b” for n-bit integer numbers.
