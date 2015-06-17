@@ -1,0 +1,11 @@
+formula    = expression;
+expression = constant                  |
+             variable                  |
+             "¬" expression            |
+             "(" expression ")"        |
+             expression "∧" expression |
+             expression "∨" expression |
+             expression "→" expression |
+             expression "↔" expression;
+constant = "0" | "1";
+variable = "a" | "b" | ... | "z";

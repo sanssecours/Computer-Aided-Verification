@@ -89,9 +89,11 @@
 
 \newcommand{\codeinput}[1]
 {
+    \vskip 0.3 cm
     {\color{lightgray}\hrule}\vskip 0.3 cm
     {\fontsize{9pt}{11pt}\input{Code/#1}}
     \vskip 0.3 cm{\color{lightgray}\hrule}
+    \vskip 0.3 cm
 }
 
 \newcommand{\code}[1]
@@ -298,7 +300,7 @@ If we first remove duplicate nonterminal nodes, then theoretically we could remo
 \begin{figure}[h]
   \centering
     \includegraphics[width=.9\textwidth]{Figures/BDD Removed Terminals And Nonterminals.pdf}
-  \caption{Removal of Terminal and Nonterminal Nodes in a BDD}
+  \caption{Removal of terminal and nonterminal nodes in a BDD}
   \label{fig:Figures_BDD_Removed_Terminals_And_Nonterminals}
 \end{figure}
 
@@ -309,7 +311,7 @@ This case is similar to the one before. The only place where the order of the op
 \begin{figure}[h]
   \centering
     \includegraphics[width=.75\textwidth]{Figures/BDD Removed Terminals And Redundant Tests.pdf}
-  \caption{Removal of Redundant Test and Terminal Nodes in A BBD}
+  \caption{Removal of redundant test and terminal nodes in a BBD}
   \label{fig:Figures_BDD_Removed_Terminals_And_Redundant_Tests}
 \end{figure}
 
@@ -322,7 +324,7 @@ There is one possibility, where removing redundant tests and redundant nontermin
 \begin{figure}[h]
   \centering
     \includegraphics[width=.6\textwidth]{Figures/BDD Removed Nonterminals And Redundant Tests.pdf}
-  \caption{Removal of Redundant Nonterminals and Tests}
+  \caption{Removal of redundant nonterminals and tests}
   \label{fig:Figures_BDD_Removed_Nonterminals_And_Redundant_Tests}
 \end{figure}
 
@@ -352,8 +354,80 @@ Figure~\ref{fig:Figures_OBDD_Smaller} shows the BDD that encodes the boolean ope
 
 \subsection{Exercise 4}
 
-Describe an algorithm which transforms a Boolean formula into an equivalent Binary decision diagram
+Describe an algorithm which transforms a boolean formula into an equivalent binary decision diagram.
 
+\subsubsection{Solution}
+
+First we need to tokenize and parse the formula. We can use an user friendly parsing library like \href{http://www.dabeaz.com/ply/}{PLY} to do this job. Our basic grammar for formulas would look something like this:
+
+\codeinput{boolean_formula}
+
+The parsing library calls different functions according to the tokens it encounters:
+
+\begin{itemize}
+    \item \code{rule\_variable(tokens)}
+    \item \code{rule\_constant(tokens)}
+    \item \code{rule\_expression(tokens)}
+    \item \code{rule\_formula(tokens)}
+\end{itemize}
+
+We assume that the functions get a list of the tokens or return values for the matched rule as argument. For example: The (partial) input: $a ∨ 0$ would mean that:
+
+\begin{flushleft}
+\begin{itemize}
+    \item \code{rule\_variable(tokens)} gets called with \code{tokens = ['a']},
+
+    \item then \code{rule\_constant(tokens)} gets called with \code{tokens = [0]}.
+
+    \item After that, \code{rule\_expression(tokens)} gets called with \code{tokens = [result\_constant, '∨', result\_variable]}.\\[0.5cm]
+
+    \code{result\_constant} and \code{result\_variable} are the values returned by the functions \code{rule\_constant()} and \code{rule\_variable()}.
+\end{itemize}
+\end{flushleft}
+
+We already defined the parsing process. Now we specify the algorithms used for the parsing functions.
+
+\paragraph{rule\_variable()}
+
+In this rule we create the BDD for the given variable. Figure~\ref{fig:BDD_Variable} shows this simple BDD for the variable $x$.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.2\textwidth]{Figures/BDD Variable.pdf}
+  \caption{BDD for a single variable $x$}
+  \label{fig:BDD_Variable}
+\end{figure}
+
+The following listing shows the pseudocode for the function:
+
+\codeinput{rule_variable}
+
+\paragraph{rule\_constant()}
+
+Depending on the given constant we either create the trivial BDD that represents “true” consisting only of the terminal node “1”, or the BDD that only consists of the terminal node “0” representing “false”.
+
+\codeinput{rule_constant}
+
+\paragraph{rule\_expression()}
+
+In this rule \code{tokens} already contains BDDs, since the rules \code{rule\_variable} or \code{rule\_constant} have been executed (for the subformula) before. There are now a few basic possibilities:
+
+\begin{enumerate}
+    \item \code{tokens} contains a single BDD returned by the function \code{rule\_constant} or \code{rule\_variable}. In this case we just return the given BDD.
+    \item \code{tokens} contains a single BDD and two parenthesis. We just return the BDD.
+    \item \code{tokens} contains a not sign ($¬$) followed by an BDD. We invert the tree by swapping the 0- and 1-terminals. After that we return the new BDD.
+    \item \code{tokens} contains one BDD, followed by a binary operator and another BDD. In this case we use the function \code{apply} from the lecture slides to create a new BDD.
+\end{enumerate}
+
+\codeinput{rule_expression}
+
+\paragraph{rule\_formula()}
+
+This rule already gets the final BDD from the last application of \code{rule\_expression()}. The only thing left to do is to return this BDD.
+
+\codeinput{rule_formula}
+
+\newpage
 \section{Temporal Logic}
 
 \subsection{Exercise 5}
