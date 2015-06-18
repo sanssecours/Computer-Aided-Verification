@@ -12,6 +12,9 @@
     \setotherlanguage{german}
 % Context sensitive quotation
 \usepackage{csquotes}
+% Citations
+\usepackage[style=alphabetic, backend=biber]{biblatex}
+    \addbibresource{References.bib}
 % Customize enumerations
 \usepackage{enumitem}
 % Extend options for positioning floats
@@ -448,8 +451,13 @@ Show the following lemma: Let $M$ and $N$ be two Kripke structures such that the
 
 \subsection{Exercise 7}
 
-Show AFG p is not logically equivalent to AFAG. Which of the two formulas implies the other one?
+Show $\mathbf{AFG}~p$ is not logically equivalent to $\mathbf{AFAG}~p$. Which of the two formulas implies the other one?
 
+\subsubsection{Solution}
+
+\input{TeX/afg_afgp_solution}
+
+We already provided an example Kripke structure, where $\mathbf{AFG}~p$ holds but $\mathbf{AFAG}~p$ does not. Since the question “Which of the two formulas implies the other one?” already states that one formula has to imply the other, we conclude that $\mathbf{AFAG}~p$ implies $\mathbf{AFG} p$, since we already disproved $\mathbf{AFG}~p ⇒ \mathbf{AFAG}~p$ with our counterexample.
 \subsection{Exercise 8}
 
 Show that all LTL properties have counterexamples which are either finite paths or finite paths which lead to a loop.
