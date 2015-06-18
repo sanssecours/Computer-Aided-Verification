@@ -484,17 +484,49 @@ Show how you can use SMV to solve the Rubik’s cube.
 
 Are the following statements correct/false? Why?
 
+\subsection{Solution}
+
 \begin{enumerate}[label=(\alph*)]
-    \item CTL is contained in LTL
-    \item LTL is contained in CTL*
-    \item Every CTL formula is equivalent to a formula containing only E, but no A
-    \item Every LTL formula is equivalent to a negation-free formula containing only A, but no E
-    \item For each Boolean function f over n variables, there exists an order on the variables such that the BDD for f has size linear in n.
-    \item Every BDD can be translated into an equivalent Boolean formula.
-    \item On a Kripke structure M, the size of a counterexample is bounded by the number of states in M, multiplied by the size of the specification.
-    \item Bounded model checking can be used to find the smallest counterexample.
-    \item In SMV, each BDD node corresponds to a state in the Kripke structure.
-    \item In SMV, BDDs are used as specification language.
+    \item CTL is contained in LTL\\
+
+    This is not the case, since there is not CTL formula that is equal to the LTL formula $\mathbf{AFG}~p$.
+
+    \item LTL is contained in CTL*\\
+
+    This is the case, since CTL* is a superset of both CTL and LTL.
+
+    \item Every CTL formula is equivalent to a formula containing only E, but no A\\
+
+    This is true, since we always can represents a CTL formula of the form $\mathbf{A}~f$ by the equivalent formula $¬\mathbf{E}~¬f$.
+
+    \item Every LTL formula is equivalent to a negation-free formula containing only A, but no E\\
+
+    This is not the case, since the only equivalent representation of the LTL formula $\mathbf{A}~p$ is $¬\mathbf{E}~¬p$, which contains $\mathbf{E}$ and is also not negation-free.
+
+    \item For each Boolean function f over n variables, there exists an order on the variables such that the BDD for f has size linear in n.\\
+
+    No, since there are boolean functions that have exponential size OBDDs for any variable ordering e.g. the middle output of a combinational circuit to multiply two integers.
+
+    \item Every BDD can be translated into an equivalent Boolean formula.\\
+
+    This is true, since a BDD is basically a compact form of a truth table and we can translate a truth table into a boolean formula using a CNF or DNF formula.
+
+    \item On a Kripke structure M, the size of a counterexample is bounded by the number of states in M, multiplied by the size of the specification.\\
+
+    Yes.
+
+    \item Bounded model checking can be used to find the smallest counterexample.\\
+
+    Yes, if there exist a counterexample. To find the smallest counterexample we just start with a bound of 1 and increase it by one till we find a counterexample.
+
+    \item In SMV, each BDD node corresponds to a state in the Kripke structure.\\
+
+    No. BDD nodes usually donate only a part of a specific state — SMV uses BDDs to encode state transitions.
+
+    \item In SMV, BDDs are used as specification language.\\
+
+    No, SMV uses either LTL or CTL as specification language.
+
 \end{enumerate}
 
 % -- Bibliography -------------------------------------------------------------
