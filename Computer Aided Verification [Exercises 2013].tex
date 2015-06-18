@@ -505,21 +505,7 @@ can be translated into Büchi automata.
 
 \subsubsection{Solution}
 
-One of the standard ways to check an LTL formula is to construct a Büchi
-automaton for the negated LTL formula $¬f$ and the given Kripke structure $M$.
-These two state machines accept the language $ℒ(¬f)$ respectively $ℒ(M)$. We
-now construct a Kripke structure representing the intersection of the two
-languages. If the language accepted by this state machine is empty then $M⊧f$
-holds. On the other hand, if there exist infinite words accepted by the
-automaton, then these words are counterexamples for $M⊧f$.\\
-
-We now need to show that there exists either a finite path or a finite path
-with a loop for the language $ℒ(¬f) ∩ ℒ(M)$ if $M⊭f$ is true. We know that if
-there exists a counter-example, then there has to be a path in the Büchi
-automaton, where at least one acceptance state occurs infinitely often. This
-means that this path has to contain a loop. This implies that there has to be
-a finite counterexample for $f$, which includes a
-loop~\cite{Norrish2010TemporalLogic}.
+\input{TeX/ltl_counterexample_solution}
 
 \subsection{Exercise 10}
 
