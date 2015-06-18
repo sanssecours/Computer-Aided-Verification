@@ -15,6 +15,8 @@
 % Citations
 \usepackage[style=alphabetic, backend=biber]{biblatex}
     \addbibresource{References.bib}
+% Caption support
+\usepackage{caption}
 % Customize enumerations
 \usepackage{enumitem}
 % Extend options for positioning floats
@@ -470,6 +472,10 @@ Show that all LTL properties have counterexamples which are either finite paths 
 
 Give an LTL specification and a Kripke structure where the smallest counterexample is larger than the number of states in the Kripke structure.
 
+\subsubsection{Solution}
+
+\input{TeX/large_counterexample_kripke_structure_solution}
+
 \subsection{Exercise 10}
 
 Show how you can use SMV to solve the Rubik’s cube.
@@ -490,5 +496,12 @@ Are the following statements correct/false? Why?
     \item In SMV, each BDD node corresponds to a state in the Kripke structure.
     \item In SMV, BDDs are used as specification language.
 \end{enumerate}
+
+% -- Bibliography -------------------------------------------------------------
+
+% Set section format for bibliography
+\titleformat{\section}{\sffamily\bfseries}{}{0pt}{}[{\color{aqua}\hrule}]
+% Display bibliography
+\printbibliography
 
 \end{document}
