@@ -421,7 +421,7 @@ In this rule \code{tokens} already contains BDDs, since the rules \code{rule\_va
     \item \code{tokens} contains a single BDD returned by the function \code{rule\_constant} or \code{rule\_variable}. In this case we just return the given BDD.
     \item \code{tokens} contains a single BDD and two parenthesis. We just return the BDD.
     \item \code{tokens} contains a not sign ($¬$) followed by an BDD. We invert the tree by swapping the 0- and 1-terminals. After that we return the new BDD.
-    \item \code{tokens} contains one BDD, followed by a binary operator and another BDD. In this case we use the function \code{apply} from the lecture slides to create a new BDD.
+    \item \code{tokens} contains one BDD, followed by a binary operator and another BDD. In this case we use the function \code{Apply} from the lecture slides to create a new BDD.
 \end{enumerate}
 
 \codeinput{rule_expression}

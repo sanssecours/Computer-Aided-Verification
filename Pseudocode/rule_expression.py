@@ -17,6 +17,6 @@ def rule_expression(tokens):
     operator = tokens[1]
     bdd1 = tokens[0]
     bdd2 = tokens[2]
-    bdd = apply(operator, bdd1, bdd2)
-    reduce(BDD)
+    bdd = Apply(operator, bdd1, bdd2)
+    Reduce(BDD)
     return BDD
