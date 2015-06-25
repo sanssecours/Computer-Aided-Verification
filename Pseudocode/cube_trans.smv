@@ -1,0 +1,12 @@
+    TRANS
+        -- Right rotation first row (1R)
+        (next(c20) = c27 & next(c21) = c20 & next(c22) = c21 &
+         next(c23) = c22 & next(c24) = c23 & next(c25) = c24 &
+         next(c26) = c25 & next(c27) = c26)
+        |
+        -- Right rotation second row (2R)
+        (next(c30) = c37 & next(c31) = c30 & next(c32) = c31 &
+         next(c33) = c32 & next(c34) = c33 & next(c35) = c34 &
+         next(c36) = c35 & next(c37) = c36)
+        |
+        -- ...

@@ -480,6 +480,57 @@ Give an LTL specification and a Kripke structure where the smallest counterexamp
 
 Show how you can use SMV to solve the Rubik’s cube.
 
+\subsubsection{Solution}
+
+We explain the basic idea behind finding the solution for a small Rubik's cube with only four fields on each side of the cube. The solution for a larger cube can be determined with the same method.\\
+
+We start by drawing the fields of the cube in a 2D plane. Figure~\ref{fig:Figures_Rubik's_Cube_-_2D} shows each field of the cube. We use the numbers on the left and top of the drawing to specify a certain field. This is useful for describing the current state of the fields of the Rubik's cube in SMV. For example we will refer to the leftmost field at the top of the cube shown in Figure~\ref{fig:Figures_Rubik's_Cube_-_2D} as \code{c02} in SMV. Here $0$ specifies the first row and $2$ specifies the third column.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.6\textwidth]{Figures/Rubik's Cube - 2D.pdf}
+  \caption{Fields of a small Rubik's Cube}
+  \label{fig:Figures_Rubik's_Cube_-_2D}
+\end{figure}
+
+We describe the value of a specific field with a certain color in SMV:
+
+\begin{center}
+    \code{c02 : \{WHITE, GREEN, RED, BLUE, ORANGE, YELLOW\}; }
+\end{center}
+
+For example: The color of field \code{c02} in Figure~\ref{fig:Figures_Rubik's_Cube_-_2D} is \code{WHITE}, the color of field \code{c35} is \code{BLUE}. We now write the module \code{main} and start by defining the variables from \code{c02} upto \code{c53}:
+
+\codeinput{cube_var}
+
+After that, we assign the initial colors (of the unsolved cube) to the fields:
+
+\codeinput{cube_assign}
+
+Now we need to specify the possible transitions of the Rubik's cube from one state to another. For this we assume that we look directly at the cube from a birds eye view. Figure~\ref{fig:Figures_Rubik's_Cube_-_Possibilities} shows that there are eight possibilities for the next move.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.4\textwidth]{Figures/Rubik's Cube - Possibilities.pdf}
+  \caption{Possible moves for a small Rubik's cube}
+  \label{fig:Figures_Rubik's_Cube_-_Possibilities}
+\end{figure}
+
+To encode each of the possible eight movements we use the SMV keyword \code{TRANS}:
+
+\codeinput{cube_trans}
+
+We now fully specified the initial state of cube and the possible state transitions for the fields of the cube. This leaves us with the question how we can tell SMV to find a solution for our initial cube. For that we define a boolean value \code{solved}, which tells SMV if the cube is solved — the fields of each side have the same color — or not:
+
+\codeinput{cube_define}
+
+We now specify a LTL formula which lets SMV find a possible “path” to a solution. For that we just use the following specification:
+
+\codeinput{cube_spec}
+
+SMV will then find a counterexample for the specified formula $\mathbf{AG} ¬solved $. This counterexample ($¬\mathbf{AG} ¬solved ≡ EF solved$) is a path that describes the state changes of the fields — aka the movements — needed to solve the Rubik's cube with the given default configuration.
+
+\newpage
 \section{Questions to Test Your Understanding}
 
 Are the following statements correct/false? Why?

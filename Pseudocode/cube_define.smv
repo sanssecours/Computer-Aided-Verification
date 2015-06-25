@@ -1,0 +1,8 @@
+    DEFINE
+        -- The four fields of each side have the same color
+        -- We only need to specify three 2x2 fields since the opposite of a
+        -- certain color is always the same (e.g. the opposite of a white field
+        -- is yellow).
+        solved := (c02 = c03 & c12 = c13 & c02 = c12 &
+                   c20 = c21 & c30 = c31 & c20 = c30 &
+                   c22 = c23 & c32 = c33 & c22 = c32)

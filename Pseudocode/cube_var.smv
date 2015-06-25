@@ -1,0 +1,7 @@
+MODULE main
+    VAR
+        -- Specify the possible values for all fields of the cube
+        c02 : {WHITE, GREEN, RED, BLUE, ORANGE, YELLOW};
+        c03 : {WHITE, GREEN, RED, BLUE, ORANGE, YELLOW};
+        -- ...
+        c53 : {WHITE, GREEN, RED, BLUE, ORANGE, YELLOW};
