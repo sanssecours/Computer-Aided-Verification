@@ -567,7 +567,11 @@ Are the following statements correct/false? Why?
 
     \item On a Kripke structure M, the size of a counterexample is bounded by the number of states in M, multiplied by the size of the specification.\\
 
-    Yes.
+    This is not the case, since there exist formulas where we can always generate larger counterexamples. Take for example the Kripke structure below. Here a valid counterexample for $s₀⊧FX¬p$ is the path $s₀s₁$ but also $s₀s₁s₀s₁$. We can always expand this counterexample by adding $s₀s₁$ at the end.
+
+    \begin{center}
+        \includegraphics[width=.4\textwidth]{Figures/Simple Kripke Structure.pdf}
+    \end{center}
 
     \item Bounded model checking can be used to find the smallest counterexample.\\
 
