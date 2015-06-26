@@ -1,7 +1,7 @@
 One of the standard ways to check an LTL formula is to construct a Büchi
 automaton for the negated LTL formula $¬f$ and the given Kripke structure $M$.
 These two state machines accept the language $ℒ(¬f)$ respectively $ℒ(M)$. We
-now construct a Kripke structure representing the intersection of the two
+now construct a Büchi automaton representing the intersection of the two
 languages. If the language accepted by this state machine is empty then $M⊧f$
 holds. On the other hand, if there exist infinite words accepted by the
 automaton, then these words are counterexamples for $M⊧f$.\\
