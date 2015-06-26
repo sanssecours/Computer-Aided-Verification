@@ -359,6 +359,7 @@ Figure~\ref{fig:Figures_OBDD_Smaller} shows the BDD that encodes the boolean ope
   \label{fig:Figures_OBDD_Smaller}
 \end{figure}
 
+\newpage
 \subsection{Exercise 4}
 
 Describe an algorithm which transforms a boolean formula into an equivalent binary decision diagram.
@@ -422,7 +423,7 @@ In this rule \code{tokens} already contains BDDs, since the rules \code{rule\_va
 \begin{enumerate}
     \item \code{tokens} contains a single BDD returned by the function \code{rule\_constant} or \code{rule\_variable}. In this case we just return the given BDD.
     \item \code{tokens} contains a single BDD and two parenthesis. We just return the BDD.
-    \item \code{tokens} contains a not sign ($¬$) followed by an BDD. We invert the tree by swapping the 0- and 1-terminals. After that we return the new BDD.
+    \item \code{tokens} contains a not sign ($¬$) followed by a BDD. We invert the tree by swapping the 0- and 1-terminals. After that we return the new BDD.
     \item \code{tokens} contains one BDD, followed by a binary operator and another BDD. In this case we use the function \code{Apply} from the lecture slides to create a new BDD.
 \end{enumerate}
 
